@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;600&display=swap" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+  </head>
+  <style>
+    .anh-em {
+      display: none;
+    }
+    .yeu {
+      display: block;
+    }
+
+  </style>
+  <style>
+    html,body{
+      height:100%
+    }
+
+    .bg_heart {
+      position: relative;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden
+    }
+
+    .heart {
+      position: absolute;
+      top: -50%;
+      -webkit-transform: rotate(-45deg);
+      -moz-transform: rotate(-45deg);
+      -m-transform: rotate(-45deg);
+      transform: rotate(-45deg)
+    }
+
+    .heart:before {
+      position: absolute;
+      top: -50%;
+      left: 0;
+      display: block;
+      content: "";
+      width: 100%;
+      height: 100%;
+      background: inherit;
+      border-radius: 100%;
+    }
+
+    .heart:after {
+      position: absolute;
+      top: 0;
+      right: -50%;
+      display: block;
+      content: "";
+      width: 100%;
+      height: 100%;
+      background: inherit;
+      border-radius: 100%;
+    }
+
+    @-webkit-keyframes love {
+      0%{top:110%}
+    }
+    @-moz-keyframes love {
+      0%{top:110%}
+    }
+    @-ms-keyframes love {
+      0%{top:110%}
+    }
+    @keyframes love {
+      0%{top:110%}
+    }
+  </style>
+
+  <body>
+
+    <!-- <audio autoplay="autopaly">
+      <source src="renxi.mp3" type="audio/mp3" />
+    </audio> -->
+    <!-- 星空html -->
+    <!-- <div> -->
+    <div class="container2">
+      <div id="dongtim" class="" style="z-index: 100"></div>
+      <div class="content">
+        <canvas id="universe"></canvas>
+      </div>
+    </div>
+    <!-- </div> -->
+    <div class="title">
+      <!-- EDIT HERE -->
+      <h3 class="STARDUST1">2022</h3>
+      <h1 class="STARDUST2"><span class="hoa1"></span> <span class="sodem"></span> <span class="thuan1"></span></h1>
+      <h3 class="STARDUST3">L O V E <strong>❤</strong> Y O U</h3>
+      <img class="img anh-em" src="/hoa.jpg" alt="JUNO_OKYO" />
+      <canvas class="tim1" ></canvas>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/particle.js"></script>
+    <script src="js/universe.js"></script>
+    <script type="text/javascript">
+          let so = 1;
+          const hoa = document.querySelector('.hoa1');
+          const thuan = document.querySelector('.thuan1');
+          const tim = document.querySelector('.tim1');
+          const sodem = document.querySelector('.sodem');
+          const anhEM = document.querySelector('.anh-em');
+          const dongTim = document.querySelector('#dongtim');
+          const vanban= ['','Em ak ', 'làm', 'ny','anh', 'Nhé!']
+
+
+          function datten () {
+            console.log(so);
+            if(so <= 5) {
+              sodem.innerText= vanban[so];
+            }else if(so = 6) {
+              hoa.innerText= 'Thuận';
+              sodem.innerText= '&';
+              thuan.innerText= 'Hòa';
+              anhEM.classList.add("yeu");
+              dongTim.classList.add("bg_heart");
+
+
+              tim.setAttribute('id','pinkboard');
+              (function(canvas) {
+                var context = canvas.getContext("2d"),
+                        particles = new ParticlePool(settings.particles.length),
+                        particleRate = settings.particles.length / settings.particles.duration, // particles/sec
+                        time;
+
+                // get point on heart with -PI <= t <= PI
+                function pointOnHeart(t) {
+                  return new Point(
+                          160 * Math.pow(Math.sin(t), 3),
+                          130 * Math.cos(t) -
+                          50 * Math.cos(2 * t) -
+                          20 * Math.cos(3 * t) -
+                          10 * Math.cos(4 * t) +
+                          25
+                  );
+                }
+
+                // creating the particle image using a dummy canvas
+                var image = (function() {
+                  var canvas = document.createElement("canvas"),
+                          context = canvas.getContext("2d");
+                  canvas.width = settings.particles.size;
+                  canvas.height = settings.particles.size;
+                  // helper function to create the path
+                  function to(t) {
+                    var point = pointOnHeart(t);
+                    point.x =
+                            settings.particles.size / 2 +
+                            (point.x * settings.particles.size) / 350;
+                    point.y =
+                            settings.particles.size / 2 -
+                            (point.y * settings.particles.size) / 350;
+                    return point;
+                  }
+                  // create the path
+                  context.beginPath();
+                  var t = -Math.PI;
+                  var point = to(t);
+                  context.moveTo(point.x, point.y);
+                  while (t < Math.PI) {
+                    t += 0.01; // baby steps!
+                    point = to(t);
+                    context.lineTo(point.x, point.y);
+                  }
+                  context.closePath();
+                  // create the fill
+                  context.fillStyle = "#ea80b0";
+                  context.fill();
+                  // create the image
+                  var image = new Image();
+                  image.src = canvas.toDataURL();
+                  return image;
+                })();
+
+                // render that thing!
+                function render() {
+                  // next animation frame
+                  requestAnimationFrame(render);
+
+                  // update time
+                  var newTime = new Date().getTime() / 1000,
+                          deltaTime = newTime - (time || newTime);
+                  time = newTime;
+
+                  // clear canvas
+                  context.clearRect(0, 0, canvas.width, canvas.height);
+
+                  // create new particles
+                  var amount = particleRate * deltaTime;
+                  for (var i = 0; i < amount; i++) {
+                    var pos = pointOnHeart(Math.PI - 2 * Math.PI * Math.random());
+                    var dir = pos.clone().length(settings.particles.velocity);
+                    particles.add(
+                            canvas.width / 2 + pos.x,
+                            canvas.height / 2 - pos.y,
+                            dir.x,
+                            -dir.y
+                    );
+                  }
+
+                  // update and draw particles
+                  particles.update(deltaTime);
+                  particles.draw(context, image);
+                }
+
+                // handle (re-)sizing of the canvas
+                function onResize() {
+                  canvas.width = canvas.clientWidth;
+                  canvas.height = canvas.clientHeight;
+                }
+                window.onresize = onResize;
+
+                // delay rendering bootstrap
+                setTimeout(function() {
+                  onResize();
+                  render();
+                }, 10);
+              })(document.getElementById("pinkboard"));
+            }
+            so = so + 1;
+          }
+          setInterval(()=>{
+
+            datten();
+          },1000)
+
+
+    </script>
+
+    <script type="text/javascript">
+      $( "#header-plugin" ).load( "https://vivinantony.github.io/header-plugin/", function() {
+        $("a.back-to-link").attr("href", "http://blog.thelittletechie.com/2015/03/love-heart-animation-using-css3.html#tlt")
+      });
+
+      var love = setInterval(function() {
+        var r_num = Math.floor(Math.random() * 40) + 1;
+        var r_size = Math.floor(Math.random() * 65) + 10;
+        var r_left = Math.floor(Math.random() * 100) + 1;
+        var r_bg = Math.floor(Math.random() * 25) + 100;
+        var r_time = Math.floor(Math.random() * 5) + 5;
+
+        $('.bg_heart').append("<div class='heart' style='width:" + r_size + "px;height:" + r_size + "px;left:" + r_left + "%;background:rgba(255," + (r_bg - 25) + "," + r_bg + ",1);-webkit-animation:love " + r_time + "s ease;-moz-animation:love " + r_time + "s ease;-ms-animation:love " + r_time + "s ease;animation:love " + r_time + "s ease'></div>");
+
+        $('.bg_heart').append("<div class='heart' style='width:" + (r_size - 10) + "px;height:" + (r_size - 10) + "px;left:" + (r_left + r_num) + "%;background:rgba(255," + (r_bg - 25) + "," + (r_bg + 25) + ",1);-webkit-animation:love " + (r_time + 5) + "s ease;-moz-animation:love " + (r_time + 5) + "s ease;-ms-animation:love " + (r_time + 5) + "s ease;animation:love " + (r_time + 5) + "s ease'></div>");
+
+        $('.heart').each(function() {
+          var top = $(this).css("top").replace(/[^-\d\.]/g, '');
+          var width = $(this).css("width").replace(/[^-\d\.]/g, '');
+          if (top <= -100 || width >= 150) {
+            $(this).detach();
+          }
+        });
+      }, 500);
+    </script>
+
+  </body>
+</html>
